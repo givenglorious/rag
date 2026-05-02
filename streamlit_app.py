@@ -81,10 +81,10 @@ else:
         with st.chat_message("assistant"):
             with st.spinner("Mencari jawaban..."):
                 try:
-                   answer = st.session_state.chain.ask(prompt)
-               except Exception as e:
-                   st.error(f"Error detail: {str(e)}")
-                   st.stop()
+                    answer = st.session_state.chain.ask(prompt)
+                except Exception as e:
+                    st.error(f"Error detail: {str(e)}")
+                    st.stop()
             st.write(answer)
 
         st.session_state.messages.append({"role": "assistant", "content": answer})
