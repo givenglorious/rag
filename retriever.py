@@ -7,7 +7,7 @@ class Retriever:
         self.model = SentenceTransformer(model_name)
         print(f"Retriever initialized with model: {model_name}")
 
-    def retrieve(self, query: str, top_k: int = 5):
+    def retrieve(self, query: str, top_k: int = 3):
         """Embed query lalu cari chunk relevan"""
         print(f"Retrieving top-{top_k} chunks for query: '{query}'")
         query_embedding = self.model.encode(query)
@@ -16,7 +16,7 @@ class Retriever:
         print(f"Found {len(results)} relevant chunks.")
         return results
 
-    def get_context(self, query: str, top_k: int = 5) -> str:
+    def get_context(self, query: str, top_k: int = 3) -> str:
         """Return context string dari chunk relevan (untuk dikirim ke LLM)"""
         results = self.retrieve(query, top_k=top_k)
         context = "\n\n".join([r["chunk"].page_content for r in results])
