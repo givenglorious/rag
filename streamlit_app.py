@@ -18,7 +18,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("◈ RAGChat")
-st.caption("Upload PDF, lalu tanya apa saja.")
+st.caption("Upload your PDF and ask questions about it!")
 
 # ── Session state ──────────────────────────────────────────
 if "chain" not in st.session_state:
@@ -30,11 +30,11 @@ if "doc_name" not in st.session_state:
 
 # ── Sidebar: upload PDF ────────────────────────────────────
 with st.sidebar:
-    st.header("📄 Dokumen")
+    st.header("📄 Document")
     uploaded = st.file_uploader("Upload PDF", type="pdf")
 
     if uploaded and uploaded.name != st.session_state.doc_name:
-        with st.spinner("Memproses dokumen..."):
+        with st.spinner("Processing document..."):
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
                 tmp.write(uploaded.read())
                 tmp_path = tmp.name
@@ -51,7 +51,7 @@ with st.sidebar:
                 st.session_state.chain = RAGChain(retriever)
                 st.session_state.doc_name = uploaded.name
                 st.session_state.messages = []
-                st.success(f"✅ {len(chunks)} chunks siap!")
+                st.success(f"✅ {len(chunks)} chunks are ready!")
             except Exception as e:
                 st.error(f"Error: {e}")
             finally:
@@ -71,15 +71,15 @@ for msg in st.session_state.messages:
         st.write(msg["content"])
 
 if st.session_state.chain is None:
-    st.info("⬅ Upload PDF dulu dari sidebar untuk mulai.")
+    st.info("⬅ Upload a PDF from the sidebar to get started.")
 else:
-    if prompt := st.chat_input("Tanya sesuatu tentang dokumenmu..."):
+    if prompt := st.chat_input("Ask something about your document..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)
 
         with st.chat_message("assistant"):
-            with st.spinner("Mencari jawaban..."):
+            with st.spinner("Searching for an answer..."):
                 try:
                     answer = st.session_state.chain.ask(prompt)
                 except Exception as e:

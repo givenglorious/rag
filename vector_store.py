@@ -7,7 +7,7 @@ class VectorStore:
     def __init__(self, dimension: int = 384):
         self.dimension = dimension
         self.index = faiss.IndexFlatL2(dimension)
-        self.chunks = []  # simpan teks chunk aslinya
+        self.chunks = []  
         print(f"Initialized FAISS index with dimension: {dimension}")
 
     def add_embeddings(self, embeddings: np.ndarray, chunks: list):

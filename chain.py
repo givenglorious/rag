@@ -13,16 +13,16 @@ class RAGChain:
         context = self.retriever.get_context(question, top_k=top_k)
         context = context[:3000]
 
-        prompt = f"""Jawab pertanyaan berdasarkan konteks berikut.
-Jika tidak ada di konteks, katakan "Saya tidak menemukan informasi tersebut."
+        prompt = f"""Answer the question based on the following context.
+If the information is not in the context, say "I could not find the information."
 
-KONTEKS:
+CONTEXT:
 {context}
 
-PERTANYAAN:
+QUESTION:
 {question}
 
-JAWABAN:"""
+ANSWER:"""
 
         response = self.client.chat.completions.create(
             model=self.model,
