@@ -5,24 +5,18 @@ import os
 
 class VectorStore:
     def __init__(self, dimension: int = 384):
-        """
-        dimension: harus sesuai output embedding model
-        paraphrase-multilingual-MiniLM-L12-v2 → 384
-        """
         self.dimension = dimension
         self.index = faiss.IndexFlatL2(dimension)
         self.chunks = []  # simpan teks chunk aslinya
         print(f"Initialized FAISS index with dimension: {dimension}")
 
     def add_embeddings(self, embeddings: np.ndarray, chunks: list):
-        """Simpan embeddings + chunks ke FAISS index"""
         embeddings = np.array(embeddings).astype("float32")
         self.index.add(embeddings)
         self.chunks.extend(chunks)
         print(f"Added {len(chunks)} chunks to FAISS index. Total: {self.index.ntotal}")
 
     def search(self, query_embedding: np.ndarray, top_k: int = 5):
-        """Cari chunk paling relevan berdasarkan query embedding"""
         query_embedding = np.array([query_embedding]).astype("float32")
         distances, indices = self.index.search(query_embedding, top_k)
 
@@ -37,7 +31,6 @@ class VectorStore:
         return results
 
     def save(self, path: str = "faiss_store"):
-        """Simpan index ke disk"""
         os.makedirs(path, exist_ok=True)
         faiss.write_index(self.index, f"{path}/index.faiss")
         with open(f"{path}/chunks.pkl", "wb") as f:
@@ -45,7 +38,6 @@ class VectorStore:
         print(f"Saved FAISS index to '{path}/'")
 
     def load(self, path: str = "faiss_store"):
-        """Load index dari disk"""
         self.index = faiss.read_index(f"{path}/index.faiss")
         with open(f"{path}/chunks.pkl", "rb") as f:
             self.chunks = pickle.load(f)
