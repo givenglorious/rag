@@ -8,7 +8,7 @@ Chunking_size and  chunking_overlap = None
 """
 
 class embedding_manage():
-    def __init__(self, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", chunking_overlap: int = 40, chunking_size: int = 200):
+    def __init__(self, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", chunking_overlap: int = 40, chunking_size: int = 500):
         self.model = SentenceTransformer(model_name)
         self.chunking_overlap = chunking_overlap
         self.chunking_size = chunking_size
