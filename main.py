@@ -8,27 +8,22 @@ from chain import RAGChain
 FAISS_STORE_PATH = "faiss_store"
 
 def build_index(pdf_path: str):
-    """Load PDF → chunk → embed → simpan ke FAISS"""
     print("\n=== BUILDING INDEX ===")
     
-    # 1. Load PDF
     document = load_data(pdf_path)
     
-    # 2. Chunk + Embed
     embedder = embedding_manage()
     chunks = embedder.check_document(document)
     embeddings = embedder.embed_chunks(chunks)
     
-    # 3. Simpan ke FAISS
     store = VectorStore(dimension=embeddings.shape[1])
     store.add_embeddings(embeddings, chunks)
     store.save(FAISS_STORE_PATH)
     
-    print("\n✅ Index berhasil dibuat dan disimpan!")
+    print("\n✅ Index is saved")
     return store, chunks
 
 def load_index():
-    """Load FAISS index dari disk"""
     print("\n=== LOADING INDEX ===")
     store = VectorStore()
     store.load(FAISS_STORE_PATH)
@@ -37,28 +32,24 @@ def load_index():
 def main():
     pdf_path = "data/data_testing_rag_cecepretran.pdf"
 
-    # Build index kalau belum ada, atau load kalau sudah
     if not os.path.exists(FAISS_STORE_PATH):
         store, _ = build_index(pdf_path)
     else:
         store = load_index()
 
-    # Setup retriever + chain
     retriever = Retriever(store)
     chain = RAGChain(retriever)
 
-    # Chat loop
-    print("\n=== RAG CHATBOT SIAP ===")
-    print("Ketik 'quit' atau 'exit' untuk keluar.\n")
+    print("\n=== RAG CHATBOT ===")
     
     while True:
-        question = input("Pertanyaan: ").strip()
+        question = input("Question: ").strip()
         if question.lower() in ["quit", "exit", ""]:
             print("Bye!")
             break
         
         answer = chain.ask(question)
-        print(f"\nJawaban: {answer}\n")
+        print(f"\nAnswer: {answer}\n")
         print("-" * 60)
 
 if __name__ == "__main__":
