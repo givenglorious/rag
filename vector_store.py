@@ -16,7 +16,7 @@ class VectorStore:
         self.chunks.extend(chunks)
         print(f"Added {len(chunks)} chunks to FAISS index. Total: {self.index.ntotal}")
 
-    def search(self, query_embedding: np.ndarray, top_k: int = 5):
+    def search(self, query_embedding: np.ndarray, top_k: int = 3):
         query_embedding = np.array([query_embedding]).astype("float32")
         distances, indices = self.index.search(query_embedding, top_k)
 
