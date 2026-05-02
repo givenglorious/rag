@@ -35,7 +35,7 @@ if __name__ == "__main__":
     # Example usage
     
     embedding_instance = embedding_manage()
-    document = load_data("data/data_testing_rag_cecepretran.pdf")
+    document = load_data("YOUR_FILE")
     chunks = embedding_instance.check_document(document)
     embeddings = embedding_instance.embed_chunks(chunks)
     
