@@ -10,6 +10,6 @@ def load_data(file_path):
         print('Successfully loaded document with', len(document), 'pages.')
         return document
     
-load_data('data/data_testing_rag_cecepretran.pdf')
+
 # Example usage:
 # load_data('YOUR_FILE.pdf')
