@@ -1,0 +1,11 @@
+.env
+.streamlit/secrets.toml
+faiss_store/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+data/
+*.pdf
+.cache/
