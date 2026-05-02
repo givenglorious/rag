@@ -8,7 +8,6 @@ class Retriever:
         print(f"Retriever initialized with model: {model_name}")
 
     def retrieve(self, query: str, top_k: int = 3):
-        """Embed query lalu cari chunk relevan"""
         print(f"Retrieving top-{top_k} chunks for query: '{query}'")
         query_embedding = self.model.encode(query)
         results = self.vector_store.search(query_embedding, top_k=top_k)
@@ -17,7 +16,6 @@ class Retriever:
         return results
 
     def get_context(self, query: str, top_k: int = 3) -> str:
-        """Return context string dari chunk relevan (untuk dikirim ke LLM)"""
         results = self.retrieve(query, top_k=top_k)
         context = "\n\n".join([r["chunk"].page_content for r in results])
         return context
