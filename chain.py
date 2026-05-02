@@ -3,7 +3,7 @@ import streamlit as st
 from groq import Groq
 
 class RAGChain:
-    def __init__(self, retriever, model: str = "llama3-8b-8192"):
+    def __init__(self, retriever, model: str = "llama-3.3-70b-versatile"):
         self.retriever = retriever
         self.model = model
         api_key = st.secrets.get("GROQ_API_KEY") or os.environ.get("GROQ_API_KEY")
