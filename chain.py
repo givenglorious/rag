@@ -16,29 +16,27 @@ class RAGChain:
         api_key = st.secrets.get("GROQ_API_KEY") or os.environ.get("GROQ_API_KEY")
         self.client = Groq(api_key=api_key)
 
-    def ask(self, question: str, top_k: int = 5) -> str:
-        """Ambil context dari retriever, lalu tanya ke Groq"""
-        context = self.retriever.get_context(question, top_k=top_k)
+  def ask(self, question: str, top_k: int = 3) -> str:
+    context = self.retriever.get_context(question, top_k=top_k)
+    
+    # Batasi panjang context
+    context = context[:3000]
 
-        prompt = f"""Kamu adalah asisten yang membantu menjawab pertanyaan berdasarkan dokumen yang diberikan.
+    prompt = f"""Jawab pertanyaan berdasarkan konteks berikut.
+Jika tidak ada di konteks, katakan "Saya tidak menemukan informasi tersebut."
 
-Gunakan HANYA informasi dari konteks berikut untuk menjawab pertanyaan.
-Jika jawaban tidak ada di dalam konteks, katakan "Saya tidak menemukan informasi tersebut dalam dokumen."
-
-=== KONTEKS ===
+KONTEKS:
 {context}
 
-=== PERTANYAAN ===
+PERTANYAAN:
 {question}
 
-=== JAWABAN ==="""
+JAWABAN:"""
 
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.2,
-            max_tokens=1024,
-        )
-
-        answer = response.choices[0].message.content
-        return answer
+    response = self.client.chat.completions.create(
+        model=self.model,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
+        max_tokens=512,
+    )
+    return response.choices[0].message.content
