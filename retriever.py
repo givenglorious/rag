@@ -19,3 +19,4 @@ class Retriever:
         results = self.retrieve(query, top_k=top_k)
         context = "\n\n".join([r["chunk"].page_content for r in results])
         return context
+
