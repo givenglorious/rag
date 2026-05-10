@@ -1,5 +1,5 @@
 import os
-from src.loader import load_data
+from src.loader import loader_data
 from src.embedding import embedding_manage
 from vector_store import VectorStore
 from retriever import Retriever
@@ -10,7 +10,7 @@ FAISS_STORE_PATH = "faiss_store"
 def build_index(pdf_path: str):
     print("\n=== BUILDING INDEX ===")
     
-    document = load_data(pdf_path)
+    document = loader_data(pdf_path)
     
     embedder = embedding_manage()
     chunks = embedder.check_document(document)

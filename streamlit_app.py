@@ -29,7 +29,7 @@ with st.sidebar:
                 tmp.write(uploaded.read())
                 tmp_path = tmp.name
             try:
-                docs     = load_data(tmp_path)
+                docs     = loader_data(tmp_path)
                 embedder = embedding_manage()
                 chunks   = embedder.check_document(docs)
                 embeddings = embedder.embed_chunks(chunks)

@@ -1,7 +1,7 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer 
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from src.loader import load_data
+from src.loader import loader_data
 
 """
 Chunking_size and  chunking_overlap = None
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     # Example usage
     
     embedding_instance = embedding_manage()
-    document = load_data("YOUR_FILE")
+    document = loader_data("YOUR_FILE")
     chunks = embedding_instance.check_document(document)
     embeddings = embedding_instance.embed_chunks(chunks)
     
