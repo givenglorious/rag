@@ -2,7 +2,7 @@ from pathlib import Path
 import streamlit as st
 import tempfile, os
 
-from src.loader import load_data
+from src.loader import loader_data
 from src.embedding import embedding_manage
 from vector_store import VectorStore
 from retriever import Retriever
