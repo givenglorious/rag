@@ -7,10 +7,10 @@ from chain import RAGChain
 
 FAISS_STORE_PATH = "faiss_store"
 
-def build_index(pdf_path: str):
+def build_index(file_path: str):
     print("\n=== BUILDING INDEX ===")
     
-    document = loader_data(pdf_path)
+    document = loader_data(file_path)
     
     embedder = embedding_manage()
     chunks = embedder.check_document(document)
@@ -30,10 +30,10 @@ def load_index():
     return store
 
 def main():
-    pdf_path = "data/data_testing_rag_cecepretran.pdf"
+    file_path = "#YOUR_FILE_PATH#" #YOUR_FILE
 
     if not os.path.exists(FAISS_STORE_PATH):
-        store, _ = build_index(pdf_path)
+        store, _ = build_index(file_path)
     else:
         store = load_index()
 
