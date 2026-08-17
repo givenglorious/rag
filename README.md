@@ -1,4 +1,5 @@
 # ◈ RAGChat
+https://r3ofl4cbie5b8jsjegxjhp.streamlit.app/
 
 Chat with your PDF documents using AI. Upload a PDF, ask anything — answers are grounded in your document.
 
